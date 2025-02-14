@@ -1,0 +1,106 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define NUM_SEQUENCES 5
+#define SEQUENCE_LENGTH 10
+#define RELATIONSHIP_THRESHOLD 70
+
+void initializeSequences(char sequences[NUM_SEQUENCES][SEQUENCE_LENGTH]);
+void displaySequences(char sequences[NUM_SEQUENCES][SEQUENCE_LENGTH]);
+double calculateSimilarity(char seq1[], char seq2[]);
+void determineRelationship(double similarity);
+void mutateSequence(char sequence[], int numMutations);
+
+int main() {
+    char sequences[NUM_SEQUENCES][SEQUENCE_LENGTH];
+    srand(time(NULL));
+
+    initializeSequences(sequences);
+    displaySequences(sequences);
+
+    int choice = 0;
+    while (choice != 3) {
+        printf("\nMenu:\n");
+        printf("1. Calculate similarity between two sequences\n");
+        printf("2. Mutate a sequence\n");
+        printf("3. Exit\n");
+        printf("Choose an option: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
+            int seq1, seq2;
+            printf("Enter the index of the first sequence (0-%d): ", NUM_SEQUENCES - 1);
+            scanf("%d", &seq1);
+            printf("Enter the index of the second sequence (0-%d): ", NUM_SEQUENCES - 1);
+            scanf("%d", &seq2);
+            if (seq1 >= 0 && seq1 < NUM_SEQUENCES && seq2 >= 0 && seq2 < NUM_SEQUENCES) {
+                double similarity = calculateSimilarity(sequences[seq1], sequences[seq2]);
+                determineRelationship(similarity);
+            } else {
+                printf("Invalid indices!\n");
+            }
+        } else if (choice == 2) {
+            int seqIndex, numMutations;
+            printf("Enter the index of the sequence to mutate (0-%d): ", NUM_SEQUENCES - 1);
+            scanf("%d", &seqIndex);
+            if (seqIndex >= 0 && seqIndex < NUM_SEQUENCES) {
+                printf("Enter the number of mutations to perform: ");
+                scanf("%d", &numMutations);
+                mutateSequence(sequences[seqIndex], numMutations);
+                displaySequences(sequences);
+            } else {
+                printf("Invalid index!\n");
+            }
+        }
+    }
+
+    return 0;
+}
+
+void initializeSequences(char sequences[NUM_SEQUENCES][SEQUENCE_LENGTH]) {
+    const char nucleotides[] = {'A', 'T', 'C', 'G'};
+    for (int i = 0; i < NUM_SEQUENCES; i++) {
+        for (int j = 0; j < SEQUENCE_LENGTH; j++) {
+            sequences[i][j] = nucleotides[rand() % 4];
+        }
+    }
+}
+
+void displaySequences(char sequences[NUM_SEQUENCES][SEQUENCE_LENGTH]) {
+    printf("\nGenetic Sequences:\n");
+    for (int i = 0; i < NUM_SEQUENCES; i++) {
+        printf("Sequence %d: ", i);
+        for (int j = 0; j < SEQUENCE_LENGTH; j++) {
+            printf("%c", sequences[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+double calculateSimilarity(char seq1[], char seq2[]) {
+    int matches = 0;
+    for (int i = 0; i < SEQUENCE_LENGTH; i++) {
+        if (seq1[i] == seq2[i]) {
+            matches++;
+        }
+    }
+    return (matches / (double) SEQUENCE_LENGTH) * 100;
+}
+
+void determineRelationship(double similarity) {
+    printf("Similarity: %.2f%%\n", similarity);
+    if (similarity > RELATIONSHIP_THRESHOLD) {
+        printf("The individuals are related.\n");
+    } else {
+        printf("The individuals are not related.\n");
+    }
+}
+
+void mutateSequence(char sequence[], int numMutations) {
+    const char nucleotides[] = {'A', 'T', 'C', 'G'};
+    for (int i = 0; i < numMutations; i++) {
+        int index = rand() % SEQUENCE_LENGTH;
+        sequence[index] = nucleotides[rand() % 4];
+    }
+}
