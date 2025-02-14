@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+// Symbolic Constants
+#define FILENAME "DnDMonsterScores.csv"
+
+// Main
+int main(void)
+{
+    FILE * fp;
+    char name[256];
+
+    fp = fopen(FILENAME,"r");
+    if (NULL!=fp)
+    {
+        // Throw away the blank line
+        fgets(name,255,fp);
+
+        fgets(name,255,fp);
+        name[255]='\0';
+        printf("Header line was: %s\n",name);
+
+        int ac,hp,str,dex,con,intel,wis,cha;
+        if (9==fscanf(fp," %[^,],%d,%d,%d,%d,%d,%d,%d,%d,",name,&ac,&hp,&str,&dex,&con,&intel,&wis,&cha))
+        {
+            printf("\"%s\" : AC=%d,HP=%d\n",name,ac,hp);
+        }
+        int count = 0;
+        float totalAC = 0;
+        float totalHP = 0;
+        while(!feof(fp))
+        {
+            printf("%d) \"%s\" : AC=%d,HP=%d\n", count, name, ac, hp);
+            count++;
+            totalAC += ac;
+            totalHP += hp;
+            fscanf(fp," %[^,],%d,%d,%d,%d,%d,%d,%d,%d,",name,&ac,&hp,&str,&dex,&con,&intel,&wis,&cha);
+        }
+
+        printf("total monster count: %d\n", count);
+        printf("total AC: %.2f\n", totalAC/count);
+        printf("total HP: %.2f\n", totalHP/count);
+    }
+
+    fclose(fp);
+}
