@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+void modifyCharacter(char *ch);
+void printDiamond(int size, char *startChar);
+
+int main()
+{
+    int size;
+    char startChar;
+    printf("Enter the size of the diamond: \n");
+    scanf("%d", &size);
+    getchar();
+    printf("Enter the starting character: \n");
+    scanf("%c", &startChar);
+
+    printDiamond(size, &startChar);
+}
+
+void modifyCharacter(char *ch)
+{
+   (*ch)++;
+}
+
+void printDiamond(int size, char *startChar)
+{
+    char diamond[9][9];
+    for (int r=0; r<9; r++)
+    {
+        for (int c=0; c<9; c++)
+        {
+            diamond[r][c] = *startChar;
+        }
+        modifyCharacter(startChar);
+    }
+
+    for (int row=0; row<size; row++)
+    {
+        int middleIndex = size - 1;
+        for (int col=0; col<middleIndex-row; col++)
+        {
+            printf(" ");
+        }
+        for (int col = 0; col < 2 * row + 1; col++)
+        {
+            printf("%c", diamond[row][col]);
+        }
+        printf("\n");
+    }
+}
