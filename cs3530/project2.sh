@@ -1,11 +1,11 @@
 ats85b@remoteapps-li:~$ cd #go to current directory
-ats85b@remoteapps-li:~$  mkdir fileProcessing #create a directory titled fileProcessing
-ats85b@remoteapps-li:~$  cd fileProcessing #change current directory to fileProcessing
-ats85b@remoteapps-li:~/fileProcessing:~$  touch ats85b #create a file titled ats85b
-ats85b@remoteapps-li:~/fileProcessing:~$  ls -l #print all files in fileProcessing
+ats85b@remoteapps-li:~$ mkdir fileProcessing #create a directory titled fileProcessing
+ats85b@remoteapps-li:~$ cd fileProcessing #change current directory to fileProcessing
+ats85b@remoteapps-li:~/fileProcessing:~$ touch ats85b #create a file titled ats85b
+ats85b@remoteapps-li:~/fileProcessing:~$ ls -l #print all files in fileProcessing
   total 0
   -rw-rw-r-- 1 ats85b ats85b 0 feb 13 17:49 ats85b #only file in fileProcessing is ats85b
-ats85b@remoteapps-li:~/fileProcessing:~$  chmod g+w ats85b # change permission for ats85b (g=group, w=permission to write)
+ats85b@remoteapps-li:~/fileProcessing:~$ chmod g+w ats85b # change permission for ats85b (g=group, w=permission to write)
 ats85b@remoteapps-li:~/fileProcessing$ cd nextDirectory #Change the directory so you are in the nextDirectory
 ats85b@remoteapps-li:~/fileProcessing/nextDirectory$ touch drewStockton #Create an empty file and name it “yourName”
 ats85b@remoteapps-li:~/fileProcessing/nextDirectory$ cd #return to the parent directory
